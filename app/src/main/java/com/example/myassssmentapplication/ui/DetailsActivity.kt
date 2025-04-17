@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -56,61 +57,100 @@ class DetailsActivity : AppCompatActivity() {
     private fun displayEntityDetails(entity: Map<String, Any>) {
         // Clear any existing views
         binding.detailsContainer.removeAllViews()
+        binding.additionalInfo.text = ""
 
-        // Add each field as a separate TextView
-        entity.forEach { (key, value) ->
-            // Create a container for each field
-            val fieldContainer = View.inflate(this, android.R.layout.simple_list_item_2, null)
-            
-            // Get the TextViews from the layout
-            val fieldNameView = fieldContainer.findViewById<TextView>(android.R.id.text1)
-            val fieldValueView = fieldContainer.findViewById<TextView>(android.R.id.text2)
+        // Convert to LinkedHashMap to preserve order
+        val orderedEntity = if (entity is LinkedHashMap) {
+            entity
+        } else {
+            LinkedHashMap(entity)
+        }
 
-            // Style the field name
-            fieldNameView.apply {
-                text = formatFieldName(key)
-                textSize = 14f
-                setTextColor(0xFF636E72.toInt()) // Gray color
-                alpha = 0.8f
-            }
+        // Get the first two fields (excluding description)
+        val firstTwoFields = orderedEntity.entries
+            .filter { it.key != "description" }
+            .take(2)
+            .toList()
 
-            // Style the field value
-            fieldValueView.apply {
-                text = formatFieldValue(value)
-                if (binding.detailsContainer.childCount == 0) {
-                    // First field (title)
-                    textSize = 28f
-                    setTextColor(0xFF2D3436.toInt()) // Dark color
+        // Get remaining fields (excluding description)
+        val remainingFields = orderedEntity.entries
+            .filter { it.key != "description" }
+            .drop(2)
+
+        // Get description separately
+        val description = orderedEntity["description"]
+
+        // Display first two fields in the main card
+        firstTwoFields.forEach { (key, value) ->
+            addFieldToContainer(binding.detailsContainer, key, value, true)
+        }
+
+        // Add a divider after the first two fields
+        if (firstTwoFields.isNotEmpty()) {
+            addDivider(binding.detailsContainer)
+        }
+
+        // Display remaining fields in the main card
+        remainingFields.forEach { (key, value) ->
+            addFieldToContainer(binding.detailsContainer, key, value, false)
+        }
+
+        // Display description in the additional information section
+        if (description != null) {
+            binding.additionalInfo.text = description.toString()
+        }
+    }
+
+    private fun addFieldToContainer(container: LinearLayout, key: String, value: Any, isMainField: Boolean) {
+        // Create a container for the field
+        val fieldContainer = View.inflate(this, android.R.layout.simple_list_item_2, null)
+        
+        // Get the TextViews from the layout
+        val fieldNameView = fieldContainer.findViewById<TextView>(android.R.id.text1)
+        val fieldValueView = fieldContainer.findViewById<TextView>(android.R.id.text2)
+
+        // Style the field name
+        fieldNameView.apply {
+            text = formatFieldName(key)
+            textSize = 14f
+            setTextColor(0xFF718096.toInt()) // Gray color
+            alpha = 0.8f
+        }
+
+        // Style the field value
+        fieldValueView.apply {
+            text = formatFieldValue(value)
+            if (isMainField) {
+                // First two fields styling
+                textSize = if (container.childCount == 0) 28f else 20f
+                setTextColor(0xFF2D3748.toInt()) // Dark color
+                if (container.childCount == 0) {
                     setTypeface(null, Typeface.BOLD)
                     setPadding(0, 8, 0, 24)
-                } else if (binding.detailsContainer.childCount == 1) {
-                    // Second field (subtitle)
-                    textSize = 20f
-                    setTextColor(0xFF2D3436.toInt()) // Dark color
+                } else {
                     alpha = 0.9f
                     setPadding(0, 4, 0, 16)
-                } else {
-                    // Other fields
-                    textSize = 16f
-                    setTextColor(0xFF2D3436.toInt()) // Dark color
-                    setPadding(0, 4, 0, 4)
                 }
+            } else {
+                // Other fields styling
+                textSize = 16f
+                setTextColor(0xFF2D3748.toInt()) // Dark color
+                setPadding(0, 4, 0, 4)
             }
+        }
 
-            binding.detailsContainer.addView(fieldContainer)
+        container.addView(fieldContainer)
+    }
 
-            // Add separator after each field except the last one
-            if (key != entity.keys.last()) {
-                View(this).apply {
-                    layoutParams = android.widget.LinearLayout.LayoutParams(
-                        android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                        1
-                    )
-                    setBackgroundColor(0xFFEEEEEE.toInt()) // Lighter separator color
-                    alpha = 0.5f
-                    binding.detailsContainer.addView(this)
-                }
-            }
+    private fun addDivider(container: LinearLayout) {
+        View(this).apply {
+            layoutParams = android.widget.LinearLayout.LayoutParams(
+                android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
+                1
+            )
+            setBackgroundColor(0xFFE2E8F0.toInt()) // Lighter separator color
+            alpha = 0.5f
+            container.addView(this)
         }
     }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F8F9FA">
+    android:background="#F5F7FA">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#FFFFFF"
             app:navigationIcon="@drawable/ic_back"
-            app:navigationIconTint="#212529"
+            app:navigationIconTint="#2D3748"
             app:contentInsetStart="16dp"
             app:contentInsetEnd="16dp" />
 
@@ -28,6 +28,7 @@
         android:layout_height="match_parent"
         android:clipToPadding="false"
         android:scrollbars="none"
+        android:paddingBottom="24dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -40,8 +41,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardBackgroundColor="#FFFFFF"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="1dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
                 app:strokeWidth="0dp">
 
                 <LinearLayout
@@ -49,9 +50,53 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="24dp">
 
                     <!-- Content will be added dynamically -->
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Additional Information"
+                        android:textColor="#2D3748"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-medium" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="#E2E8F0" />
+
+                    <TextView
+                        android:id="@+id/additionalInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#718096"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp"
+                        android:paddingBottom="8dp" />
 
                 </LinearLayout>
 

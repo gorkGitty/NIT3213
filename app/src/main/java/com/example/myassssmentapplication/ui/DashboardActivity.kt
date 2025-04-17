@@ -75,26 +75,21 @@ class DashboardActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
-        binding.artworksRecyclerView.layoutManager = LinearLayoutManager(this)
-        binding.artworksRecyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
     }
 
     private fun setupObservers() {
         viewModel.dashboardResult.observe(this) { result ->
             when (result) {
                 is DashboardResult.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.errorTextView.visibility = View.GONE
                     adapter.submitList(result.entities)
                 }
                 is DashboardResult.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.errorTextView.visibility = View.VISIBLE
-                    binding.errorTextView.text = result.message
+                    Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
                 }
                 is DashboardResult.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.errorTextView.visibility = View.GONE
+                    // Loading state is handled by the ViewModel
                 }
             }
         }

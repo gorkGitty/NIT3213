@@ -3,42 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
+    android:layout_marginBottom="16dp"
     android:clickable="true"
     android:focusable="true"
     app:cardBackgroundColor="#FFFFFF"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="1dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
     app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/artworkTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#212529"
-            android:textSize="16sp"
+            android:textColor="#2D3748"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:fontFamily="sans-serif-medium" />
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
+            android:ellipsize="end" />
 
         <TextView
             android:id="@+id/artworkArtist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="#495057"
+            android:textColor="#718096"
             android:textSize="14sp"
-            android:fontFamily="sans-serif" />
+            android:maxLines="1"
+            android:ellipsize="end" />
 
         <LinearLayout
+            android:id="@+id/hiddenLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal"
             android:visibility="gone">
 
@@ -47,17 +51,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textColor="#868E96"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:textColor="#A0AEC0"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
             <TextView
                 android:id="@+id/artworkYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#868E96"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:layout_marginStart="8dp"
+                android:textColor="#A0AEC0"
+                android:textSize="12sp" />
 
         </LinearLayout>
 
