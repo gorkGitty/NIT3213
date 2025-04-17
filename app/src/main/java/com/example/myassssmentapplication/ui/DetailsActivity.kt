@@ -1,10 +1,15 @@
 package com.example.myassssmentapplication.ui
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myassssmentapplication.R
 import com.example.myassssmentapplication.databinding.ActivityDetailsBinding
 import kotlin.math.roundToInt
 
@@ -26,6 +31,25 @@ class DetailsActivity : AppCompatActivity() {
             displayEntityDetails(entity)
         } else {
             finish()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.dashboard_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_logout -> {
+                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

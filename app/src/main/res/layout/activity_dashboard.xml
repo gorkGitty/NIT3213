@@ -18,7 +18,10 @@
             android:background="#FFFFFF"
             android:elevation="0dp"
             app:titleTextColor="#212529"
-            app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title" />
+            app:titleTextAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            app:menu="@menu/dashboard_menu"
+            app:contentInsetStart="16dp"
+            app:contentInsetEnd="16dp" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
